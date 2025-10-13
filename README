@@ -1,0 +1,8 @@
+Funciones a implementar:
+
+create: Inicializa el cache con tamaño especifico.
+add: Agrega un dato al cache.
+seach: Buscar un dato, en caso de que este presente devuelve la posicion.
+Get: Usa un dato, y modifica su prioridad.
+all: Muestra los datos que estan en el cache, segun su prioridad.
+exit: vacia el cache y cierra el programa.
