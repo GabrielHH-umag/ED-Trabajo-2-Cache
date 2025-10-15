@@ -1,6 +1,7 @@
 Funciones a implementar:
 
-create: Inicializa la cache con tamaño especifico.
+help: Indica que comandos puede utilizar el usuario. //implementado
+create: Inicializa la cache con tamaño especifico. //Implementado
 add: Agrega un dato al cache.
 seach: Buscar un dato, en caso de que este presente devuelve la posicion.
 Get: Usa un dato, y modifica su prioridad.
