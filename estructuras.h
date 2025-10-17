@@ -6,15 +6,20 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
-typedef struct 
+typedef struct Dato
 {
-    char *nombre;
-    int prioridad;
-} Dato;
-typedef struct 
+    int clave;
+    char *valor;
+    struct Dato *siguiente;
+    struct Dato *anterior;
+}Dato;
+
+typedef struct Cache
 {
     int tamanho_memoria;
     int memoria_ocupada;
-    Dato *memoria;
-} Cache;
+    Dato *cabecera;
+    Dato *cola;
+}Cache;
+
 #endif // ESTRUCTURAS_H

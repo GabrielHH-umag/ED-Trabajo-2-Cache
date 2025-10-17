@@ -1,59 +1,80 @@
 #include "comandos.h"
 
-int main(int argc, char *argv[])
+int main()
 {
-    
-    if(argc < 2) 
-    {
-        lru_err("Argumnetos insuficientes, intente <--help> o <-h> para mas informacion\n");
-        return 1;
-    }
     Cache cache;
-    int command;
+    int command = -1;
+    char command_str[20];
+    int running = true;
+    char *argumento_1= NULL;
+    char *argumento_2= NULL;
     init_cache(&cache);
-    get_command(argv[1], &command);
-    switch (command)
+    while(running == true)
     {
-        case HELP:
+        printf("lru ");
+        
+        if (fgets(command_str, sizeof(command_str), stdin) == NULL)//fgets lee hasta salto de linea, a comparacion de scanf que solo lee hasta espacio
         {
-            Help();
-            break;
+            lru_err("Error al leer el comando, evite el uso de caracteres especiales, -h para ayuda");
+            continue;
         }
-        case CREATE:
+        command_str[strcspn(command_str, "\n")] = 0; //Para eliminar el salto de linea al final del string, asi podemos comparar bien con get_command
+        //procedemos a separar el comando de sus argumentos, para que sea lo mas parecido a un cmd
+        argumento_1 = strtok(command_str, " "); 
+        argumento_2 = strtok(NULL, " ");
+        get_command(argumento_1, &command);
+        switch (command)
         {
-            if (argc < 3)
+            case HELP:
             {
-                lru_err("Falta el tamanho de la cache\n");
-                return 1;
+                Help();
+                break;
             }
-            Create_cache(&cache, argv[2]);
-            break;
-        }
-        case ADD:
-        {
-            if (argc < 3)
+            case CREATE:
             {
-                lru_err("Falta el nombre del elemento a agregar\n");
-                return 1;
+                if (argumento_2 == NULL)
+                {
+                    lru_err("Falta el argumento <TAMANHO>, -h para ayuda");
+                    break;
+                }
+                Create_cache(&cache, argumento_2);
+                break;
             }
-            break;
-        }
-        case ALL:
-        {
-            break;
-        }
-        case GET:
-        {
-            if (argc < 3)
+            case ADD:
             {
-                lru_err("Falta el nombre del elemento a buscar\n");
-                return 1;
+                if (argumento_2 == NULL)
+                {
+                    lru_err("Falta el argumento <NOMBRE>, -h para ayuda");
+                    break;
+                }
+                Add_data(&cache, argumento_2);
+                break;
             }
-            break;
-        }
-        case EXIT:
-        {
-            break;
+            case ALL:
+            {
+                All_cache(&cache);
+                break;
+            }
+            case GET:
+            {
+                //Get_data
+                break;
+            }
+            case EXIT:
+            {
+                Exit_cache(&cache, &running);
+                break;
+            }
+            case SEARCH:
+            {
+                //Search_data
+                break;
+            }
+            case -1:
+            {
+                lru_err("Comando no reconocido, use -h o --help para ver la ayuda");
+                break;
+            }
         }
     }
     return 0;
