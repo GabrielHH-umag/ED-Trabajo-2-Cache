@@ -1,25 +1,21 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "constantes.h"
-
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
-typedef struct Dato
-{
-    int clave;
-    char *valor;
-    struct Dato *siguiente;
-    struct Dato *anterior;
-}Dato;
+#include "constantes.h"
 
-typedef struct Cache
-{
-    int tamanho_memoria;
-    int memoria_ocupada;
-    Dato *cabecera;
-    Dato *cola;
-}Cache;
+typedef struct Dato {
+    char *valor;              //una letra mayuscula como string terminado en '\0'
+    struct Dato *siguiente;   //siguiente en la lista
+    struct Dato *anterior;    //anterior en la lista
+} Dato;
 
-#endif // ESTRUCTURAS_H
+typedef struct Cache {
+    int tamanho_memoria;      //capacidad (minimo 5)
+    int memoria_ocupada;      //cantidad actual
+    Dato *cabecera;           //MRU (mas recientemente usado)
+    Dato *cola;               //LRU (menos recientemente usado)
+} Cache;
+
+#endif //ESTRUCTURAS_H
+
+
